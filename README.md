@@ -219,9 +219,7 @@ npm run lint:fix
 ```
 
 ## Dependencies
-
-- `@nestjs/common` - NestJS core
-- `@nestjs/config` - Configuration management
+- `@nestjs/config` - Configuration management 
 - `@opentelemetry/api` - OpenTelemetry integration
 - `pino` - Fast Node.js logger
 - `pino-http` - HTTP request logging
