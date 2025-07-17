@@ -4,38 +4,15 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "parserOpts": {
-          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
-        },
-        "preset": "angular",
         "releaseRules": [
           {
-            "release": false,
-            "scope": "wip"
-          },
-          {
-            "release": false,
-            "scope": "WIP"
-          },
-          {
-            "release": false,
-            "scope": "no-release"
+            "message": "*\\[python\\]*",
+            "release": false
           }
         ]
       }
     ],
-    [
-      "@semantic-release/release-notes-generator",
-      {
-        "parserOpts": {
-          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
-        },
-        "preset": "angular",
-        "writerOpts": {
-          "commitsSort": ["subject", "scope"]
-        }
-      }
-    ],
+    "@semantic-release/release-notes-generator",
     [
       "@semantic-release/changelog",
       {
@@ -48,14 +25,9 @@
         "npmPublish": true
       }
     ],
+    "@semantic-release/github",
     [
       "@semantic-release/git",
-      {
-        "assets": ["package.json", "pnpm-lock.yaml", "CHANGELOG.md"]
-      }
-    ],
-    [
-      "@semantic-release/github",
       {
         "assets": ["package.json", "pnpm-lock.yaml", "CHANGELOG.md"],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
