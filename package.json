@@ -38,7 +38,8 @@
   "bugs": {
     "url": "https://github.com/nestjs-labs/nestjs-pino-extra/issues"
   },
-  "homepage": "https://github.com/nestjs-labs/nestjs-pino-extra#readme",
+  "homepage": "https://nestjs-labs.github.io/nestjs-pino-extra",
+  "docs": "https://nestjs-labs.github.io/nestjs-pino-extra",
   "files": [
     "dist"
   ],

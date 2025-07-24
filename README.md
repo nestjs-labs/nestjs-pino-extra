@@ -2,6 +2,8 @@
 
 Enhanced nestjs-pino with OpenTelemetry integration, file rotation, Loki support, and enterprise features for production-ready logging.
 
+📖 **[Full Documentation](https://nestjs-labs.github.io/nestjs-pino-extra)** | 🐛 **[Issues](https://github.com/nestjs-labs/nestjs-pino-extra/issues)** | 💬 **[Discussions](https://github.com/nestjs-labs/nestjs-pino-extra/discussions)**
+
 ## Features
 
 - 🚀 **Easy Integration**: Simple setup with NestJS Pino
