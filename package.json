@@ -18,7 +18,8 @@
     "format": "prettier --write .",
     "dry-run": "npm publish --dry-run",
     "prepublishOnly": "npm run build",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "typedoc": "typedoc --options typedoc.json"
   },
   "repository": {
     "type": "git",
@@ -57,7 +58,7 @@
     "@nestjs-labs/eslint-config": "^1.0.1",
     "@nestjs/config": "^4.0.2",
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.3",
     "@semantic-release/npm": "^12.0.2",

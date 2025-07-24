@@ -1,0 +1,16 @@
+{
+  "entryPoints": ["./src/index.ts"],
+  "out": "./_docs",
+  "excludeExternals": true,
+  "theme": "default",
+  "name": "NestJS Pino Extra Documentation",
+  "readme": "./README.md",
+  "includeVersion": true,
+  "sort": ["source-order"],
+  "searchInComments": true,
+  "hideGenerator": false,
+  "exclude": ["**/node_modules/**", "**/dist/**"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": false
+}
