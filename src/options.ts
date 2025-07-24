@@ -1,19 +1,21 @@
-import type { IncomingMessage, ServerResponse } from 'http';
+/* eslint-disable sort-keys */
 import { randomUUID } from 'node:crypto';
 
-import pino from 'pino';
+import type { IncomingMessage, ServerResponse } from 'http';
 import type { Options } from 'pino-http';
 
-import { getOtelFormatters } from './formatters';
-import { getSerializers } from './serializers';
+import pino from 'pino';
+
+import { getOtelFormatters } from './formatters.js';
+import { getSerializers } from './serializers.js';
 
 /**
  * get pino http option
  */
 export function getPinoHttpOption(
-  level: string = 'info',
-  spanIdKey: string = 'spanId',
-  traceIdKey: string = 'traceId',
+  level = 'info',
+  spanIdKey = 'spanId',
+  traceIdKey = 'traceId',
 ): Options {
   return {
     // https://getpino.io/#/docs/api?id=timestamp-boolean-function
@@ -40,9 +42,12 @@ export function getPinoHttpOption(
     },
     genReqId: function (req, res) {
       const reqId = req.id ?? req.headers['x-request-id'];
+
       if (reqId) return reqId;
       const id = randomUUID();
+
       res.setHeader('X-Request-Id', id);
+
       return id;
     },
     // Define a custom logger level

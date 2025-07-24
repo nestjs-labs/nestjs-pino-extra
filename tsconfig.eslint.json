@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": false,
+    "noUnusedLocals": true
+  },
+  "exclude": ["pnpm-lock.yaml"]
+}

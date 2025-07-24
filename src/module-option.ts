@@ -1,17 +1,18 @@
+/* eslint-disable sort-keys */
 import type { ConfigService } from '@nestjs/config';
 import type { Params } from 'nestjs-pino';
-import pino from 'pino';
+import type pino from 'pino';
 
-import { getPinoHttpOption } from './options';
-import { getMultiDestinationStream } from './streams';
+import { getPinoHttpOption } from './options.js';
+import { getMultiDestinationStream } from './streams.js';
 
 /**
  * Configuration interface for better type safety
  */
 interface LogConfig {
   app: string;
-  level: pino.Level;
   filename?: string;
+  level: pino.Level;
   loki?: string;
   spanIdKey: string;
   traceIdKey: string;
@@ -22,8 +23,7 @@ interface LogConfig {
  */
 export function extractLogConfig(configService: ConfigService): LogConfig {
   const app = configService.get<string>('OTLP_SERVICE_NAME') ?? 'app';
-  const level = (configService.get<string>('LOG_LEVEL') ??
-    'info') as pino.Level;
+  const level = configService.get<pino.Level>('LOG_LEVEL') ?? 'info';
   const filename = configService.get<string>('LOG_FILE');
   const loki = configService.get<string>('LOG_LOKI');
   const spanIdKey = configService.get<string>('OTEL_SPAN_ID_KEY') ?? 'spanId';
@@ -39,6 +39,7 @@ export function extractLogConfig(configService: ConfigService): LogConfig {
     'debug',
     'trace',
   ];
+
   if (!validLevels.includes(level)) {
     throw new Error(
       `Invalid LOG_LEVEL: ${level}. Must be one of: ${validLevels.join(', ')}`,
@@ -47,8 +48,8 @@ export function extractLogConfig(configService: ConfigService): LogConfig {
 
   return {
     app,
-    level,
     filename,
+    level,
     loki,
     spanIdKey,
     traceIdKey,
@@ -82,6 +83,7 @@ export function getParamsFromConfig(
     pinoHttp,
     exclude: [{ method: 0, path: '/health' }],
   };
+
   return Object.assign(params, overrides);
 }
 
@@ -107,5 +109,6 @@ export function getNestjsPinoModuleOptions(
   overrides: Params = {},
 ): Params {
   const config = extractLogConfig(configService);
+
   return getParamsFromConfig(config, overrides);
 }

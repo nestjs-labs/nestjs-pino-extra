@@ -2,13 +2,13 @@
 export * from 'nestjs-pino';
 
 // re-export nestjs-pino module options
-export { getNestjsPinoModuleOptions } from './module-option';
-export { getOtelFormatters } from './formatters';
-export { getSerializers } from './serializers';
-export { getPinoHttpOption } from './options';
+export { getOtelFormatters } from './formatters.js';
+export { getNestjsPinoModuleOptions } from './module-option.js';
+export { getPinoHttpOption } from './options.js';
+export { getSerializers } from './serializers.js';
 export {
-  createPrettyStreamEntry,
-  createLokiStreamEntry,
   createFileStreamEntry,
+  createLokiStreamEntry,
+  createPrettyStreamEntry,
   getMultiDestinationStream,
-} from './streams';
+} from './streams.js';

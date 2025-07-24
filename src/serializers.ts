@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 import type { SerializerFn } from 'pino';
 import type {
   SerializedError,
@@ -9,12 +10,13 @@ import type {
  * get serializers
  * https://github.com/pinojs/pino-http?tab=readme-ov-file#custom-serializers--custom-log-attribute-keys
  */
-export function getSerializers(): { [key: string]: SerializerFn } {
+export function getSerializers(): Record<string, SerializerFn> {
   return {
     req(req: SerializedRequest) {
       const request = req.raw as unknown as Request & {
         query: Record<string, unknown>;
       };
+
       return {
         id: req.id,
         method: req.method,
@@ -26,6 +28,7 @@ export function getSerializers(): { [key: string]: SerializerFn } {
     },
     res(response: SerializedResponse) {
       const { statusCode: status, ...serialized } = response;
+
       return Object.assign({ status }, serialized);
     },
     err(err: SerializedError) {

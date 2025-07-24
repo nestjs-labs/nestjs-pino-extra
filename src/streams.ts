@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys */
 import path from 'node:path';
 
 import pino from 'pino';
@@ -9,7 +10,7 @@ import { createStream } from 'rotating-file-stream';
  * create pretty stream entry
  */
 export function createPrettyStreamEntry(
-  app: string,
+  _app: string,
   level: pino.Level,
 ): pino.StreamEntry {
   const stream = pinoPretty({
@@ -17,6 +18,7 @@ export function createPrettyStreamEntry(
     hideObject: false,
     colorize: true,
   });
+
   return { level, stream };
 }
 
@@ -36,6 +38,7 @@ export function createLokiStreamEntry(
     host, // Change if Loki hostname is different
     labels: { app },
   });
+
   return { level, stream };
 }
 
@@ -44,11 +47,11 @@ export function createLokiStreamEntry(
  * https://github.com/iccicci/rotating-file-stream?tab=readme-ov-file#initialrotation
  */
 export function createFileStreamEntry(
-  app: string,
+  _app: string,
   level: pino.Level,
   filepath: string,
 ): pino.StreamEntry {
-  const { dir, base } = path.parse(filepath);
+  const { base, dir } = path.parse(filepath);
 
   const stream = createStream(base, {
     size: '1G', // 1G rotate every 1 Gigabyte written
@@ -56,6 +59,7 @@ export function createFileStreamEntry(
     compress: 'gzip', // compress rotated files
     path: dir,
   });
+
   return { level, stream };
 }
 
@@ -70,6 +74,7 @@ export function getMultiDestinationStream(
   loki?: string,
 ): pino.MultiStreamRes {
   const entries: pino.StreamEntry[] = [createPrettyStreamEntry(app, level)];
+
   if (filepath) entries.push(createFileStreamEntry(app, level, filepath));
   if (loki) entries.push(createLokiStreamEntry(app, level, loki));
 
