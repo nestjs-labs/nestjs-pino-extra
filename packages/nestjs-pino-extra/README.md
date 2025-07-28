@@ -1,4 +1,4 @@
-# @nestjs-labs/nest-pino-extra
+# @nestjs-labs/nestjs-pino-extra
 
 Enhanced nestjs-pino with OpenTelemetry, Loki, file rotation and enterprise features.
 
@@ -7,7 +7,7 @@ Enhanced nestjs-pino with OpenTelemetry, Loki, file rotation and enterprise feat
 This package has peer dependencies that must be installed:
 
 ```bash
-pnpm install @nestjs-labs/nest-pino-extra nestjs-pino @nestjs-labs/pino-http-extra @nestjs/config --save
+pnpm install @nestjs-labs/nestjs-pino-extra nestjs-pino @nestjs-labs/pino-http-extra @nestjs/config --save
 ```
 
 ### Peer Dependencies
@@ -36,7 +36,7 @@ If any of these dependencies are missing, you'll get runtime errors when trying 
 ```typescript
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoggerModule } from '@nestjs-labs/nest-pino-extra';
+import { LoggerModule } from '@nestjs-labs/nestjs-pino-extra';
 
 @Module({
   imports: [
@@ -71,7 +71,7 @@ OTEL_TRACE_ID_KEY=traceId
 ```typescript
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { LoggerModule } from '@nestjs-labs/nest-pino-extra';
+import { LoggerModule } from '@nestjs-labs/nestjs-pino-extra';
 
 @Module({
   imports: [

@@ -1,5 +1,5 @@
 /**
- * @nestjs-labs/nest-pino-extra
+ * @nestjs-labs/nestjs-pino-extra
  * Enhanced nestjs-pino with OpenTelemetry, Loki, file rotation and enterprise features
  */
 

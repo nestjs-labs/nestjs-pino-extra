@@ -23,7 +23,7 @@
     [
       "@anolilab/semantic-release-pnpm",
       {
-        "npmPublish": false,
+        "npmPublish": true,
         "tarballDir": "dist"
       }
     ],
