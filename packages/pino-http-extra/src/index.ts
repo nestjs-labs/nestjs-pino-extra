@@ -1,9 +1,11 @@
-// reexport nestjs-pino
-export * from 'nestjs-pino';
+/**
+ * @nestjs-labs/pino-http-extra
+ * Enhanced pino-http with OpenTelemetry, Loki, file rotation and enterprise features
+ */
+
 
 // re-export nestjs-pino module options
 export { getOtelFormatters } from './formatters.js';
-export { getNestjsPinoModuleOptions } from './module-option.js';
 export { getPinoHttpOption } from './options.js';
 export { getSerializers } from './serializers.js';
 export {

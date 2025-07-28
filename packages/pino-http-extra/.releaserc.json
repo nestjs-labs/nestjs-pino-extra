@@ -4,6 +4,7 @@
     [
       "@semantic-release/commit-analyzer",
       {
+        "preset": "angular",
         "releaseRules": [
           {
             "message": "*\\[python\\]*",
@@ -16,7 +17,7 @@
     [
       "@semantic-release/changelog",
       {
-        "changelogFile": "docs/CHANGELOG.md"
+        "changelogFile": "CHANGELOG.md"
       }
     ],
     [
@@ -29,7 +30,7 @@
     [
       "@semantic-release/git",
       {
-        "assets": ["package.json", "pnpm-lock.yaml", "CHANGELOG.md"],
+        "assets": ["package.json", "CHANGELOG.md"],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
