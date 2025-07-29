@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nestjs-labs/nestjs-pino-extra/compare/v1.0.1...v1.0.2) (2025-07-29)
+
+
+### Bug Fixes
+
+* bump version to 1.0.5 for pino-http-extra ([e8070f0](https://github.com/nestjs-labs/nestjs-pino-extra/commit/e8070f050144d6abcb2c3700c171ad817a7171f1))
+
 ## [1.0.1](https://github.com/nestjs-labs/nestjs-pino-extra/compare/v1.0.0...v1.0.1) (2025-07-29)
 
 
