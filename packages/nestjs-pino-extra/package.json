@@ -10,17 +10,9 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     },
-    "./options": {
-      "import": "./dist/options.js",
-      "require": "./dist/options.js"
-    },
-    "./streams": {
-      "import": "./dist/streams.js",
-      "require": "./dist/streams.js"
-    },
-    "./serializers": {
-      "import": "./dist/serializers.js",
-      "require": "./dist/serializers.js"
+    "./module-option": {
+      "import": "./dist/module-option.js",
+      "require": "./dist/module-option.js"
     }
   },
   "scripts": {
