@@ -45,9 +45,9 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
-    "@nestjs-labs/eslint-config": "^1.0.1",
+    "@nestjs-labs/eslint-config": "^1.0.2",
     "@nestjs/config": "^4.0.2",
-    "eslint": "^9.31.0",
+    "eslint": "^9.32.0",
     "prettier": "^3.6.2",
     "tslib": "^2.8.0",
     "turbo": "^2.5.5",
