@@ -5,25 +5,24 @@ Enhanced pino-http with OpenTelemetry, Loki, file rotation and enterprise featur
 [![npm version](https://img.shields.io/npm/v/@nestjs-labs/pino-http-extra.svg)](https://www.npmjs.com/package/@nestjs-labs/pino-http-extra)
 [![License](https://img.shields.io/npm/l/@nestjs-labs/pino-http-extra.svg)](https://github.com/nestjs-labs/nestjs-pino-extra/blob/main/LICENSE)
 
-## 🚀 Features
+## Features
 
-- 🔍 **OpenTelemetry Integration**: Automatic span and trace ID injection for distributed tracing
-- 📊 **Loki Transport**: Send logs to Grafana Loki for centralized log management
-- 📁 **File Rotation**: Automatic log file rotation with compression (1GB size, daily rotation)
-- 🎨 **Pretty Logging**: Colored and formatted console output for development
-- 🔒 **Security**: Automatic redaction of sensitive fields (password, user data)
+- 🔍 **OpenTelemetry Integration**: Automatic span and trace ID injection
+- 📊 **Loki Transport**: Send logs to Grafana Loki
+- 📁 **File Rotation**: Automatic log file rotation with compression
+- 🎨 **Pretty Logging**: Colored and formatted console output
+- 🔒 **Security**: Automatic redaction of sensitive fields
 - ⚡ **Performance**: High-performance logging with Pino
 - 🆔 **Request ID**: Automatic request ID generation and tracking
 - 📈 **Response Time**: Automatic response time tracking
-- 🎯 **Smart Log Levels**: Status code-based log level determination
 
-## 📦 Installation
+## Installation
 
 ```bash
 npm install @nestjs-labs/pino-http-extra
 ```
 
-## 🏃‍♂️ Quick Start
+## Quick Start
 
 ### Basic Setup
 
@@ -31,7 +30,6 @@ npm install @nestjs-labs/pino-http-extra
 import pino from 'pino'
 import pinoHttp from 'pino-http'
 import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra'
-import "dotenv/config"
 
 const level = process.env.LOG_LEVEL || 'info'
 const app = process.env.APP_NAME || 'my-app'
@@ -54,9 +52,7 @@ const app = express()
 const multiStream = getMultiDestinationStream(app, 'info', 'logs/app.log', 'http://loki:3100')
 const pinoHttpOption = getPinoHttpOption()
 const pinoHttpLogger = pinoHttp(pinoHttpOption)
-const logger = pino(pinoHttpOption, multiStream)
 
-// Use as middleware
 app.use(pinoHttpLogger)
 
 app.get('/', (req, res) => {
@@ -65,7 +61,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(3000, () => {
-  logger.info('Server running on port 3000')
+  console.log('Server running on port 3000')
 })
 ```
 
@@ -73,7 +69,7 @@ app.listen(3000, () => {
 
 ```typescript
 import Fastify from 'fastify'
-import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra'
+import { getPinoHttpOption } from '@nestjs-labs/pino-http-extra'
 
 const fastify = Fastify({
   logger: getPinoHttpOption()
@@ -87,24 +83,7 @@ fastify.get('/', async (request, reply) => {
 fastify.listen({ port: 3000 })
 ```
 
-### Advanced Configuration
-
-```typescript
-import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra'
-
-// Custom OpenTelemetry keys
-const options = getPinoHttpOption('debug', 'customSpanId', 'customTraceId')
-
-// Multi-destination with custom settings
-const multiStream = getMultiDestinationStream(
-  'my-app',           // app name
-  'info',             // log level
-  '/var/log/app.log', // file path (optional)
-  'http://loki:3100'  // loki host (optional)
-)
-```
-
-## 📚 API Reference
+## API Reference
 
 ### Core Functions
 
@@ -119,13 +98,6 @@ Get pino-http options with OpenTelemetry integration and security features.
 
 **Returns:** `Options` - Configured pino-http options
 
-**Features:**
-- Automatic request ID generation
-- Response time tracking
-- Status code-based log levels
-- Sensitive data redaction
-- OpenTelemetry integration
-
 #### `getMultiDestinationStream(app, level?, filepath?, loki?)`
 
 Create multi-destination stream supporting pretty, file, and Loki outputs.
@@ -138,38 +110,7 @@ Create multi-destination stream supporting pretty, file, and Loki outputs.
 
 **Returns:** `MultiStreamRes` - Configured multi-stream
 
-**Features:**
-- Pretty console output with colors
-- File rotation (1GB size, daily rotation, gzip compression)
-- Loki transport with batching
-
-### Stream Functions
-
-#### `createPrettyStreamEntry(app, level)`
-
-Create pretty console stream entry.
-
-#### `createFileStreamEntry(app, level, filepath)`
-
-Create file rotation stream entry.
-
-#### `createLokiStreamEntry(app, level, host)`
-
-Create Loki transport stream entry.
-
-### Formatters
-
-#### `getOtelFormatters(spanIdKey?, traceIdKey?)`
-
-Get OpenTelemetry formatters for automatic span and trace ID injection.
-
-### Serializers
-
-#### `getSerializers()`
-
-Get enhanced serializers for request/response objects.
-
-## 🔧 Examples
+## Examples
 
 ### Custom Logging
 
@@ -222,26 +163,6 @@ The middleware automatically logs HTTP requests with:
 }
 ```
 
-## 🔒 Security Features
+## License
 
-- **Automatic Redaction**: Sensitive fields are automatically redacted
-- **Request ID Tracking**: Each request gets a unique ID for tracing
-- **No Sensitive Data**: Passwords and user credentials are never logged
-
-## 🚀 Performance
-
-- **High Performance**: Built on Pino, one of the fastest Node.js loggers
-- **Minimal Overhead**: Optimized for production use
-- **Async Logging**: Non-blocking log operations
-- **Batching**: Loki transport supports batching for better performance
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🔗 Links
-
-- [Documentation](https://nestjs-labs.github.io/nestjs-pino-extra)
-- [GitHub Repository](https://github.com/nestjs-labs/nestjs-pino-extra)
-- [NPM Package](https://www.npmjs.com/package/@nestjs-labs/pino-http-extra)
-- [Issues](https://github.com/nestjs-labs/nestjs-pino-extra/issues) 
+MIT 

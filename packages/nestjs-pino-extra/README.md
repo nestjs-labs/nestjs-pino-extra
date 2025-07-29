@@ -2,23 +2,8 @@
 
 Enhanced nestjs-pino with OpenTelemetry, Loki, file rotation and enterprise features.
 
-## Installation
-
-This package has peer dependencies that must be installed:
-
-```bash
-pnpm install @nestjs-labs/nestjs-pino-extra nestjs-pino @nestjs-labs/pino-http-extra @nestjs/config --save
-```
-
-### Peer Dependencies
-
-This package requires the following peer dependencies:
-
-- **@nestjs/config** (^4.0.0): Required for configuration management
-- **nestjs-pino** (^4.4.0): Required for NestJS Pino integration  
-- **@nestjs-labs/pino-http-extra** (^1.0.0): Required for enhanced pino-http functionality
-
-If any of these dependencies are missing, you'll get runtime errors when trying to use the package. Make sure to install all peer dependencies.
+[![npm version](https://img.shields.io/npm/v/@nestjs-labs/nestjs-pino-extra.svg)](https://www.npmjs.com/package/@nestjs-labs/nestjs-pino-extra)
+[![License](https://img.shields.io/npm/l/@nestjs-labs/nestjs-pino-extra.svg)](https://github.com/nestjs-labs/nestjs-pino-extra/blob/main/LICENSE)
 
 ## Features
 
@@ -28,6 +13,18 @@ If any of these dependencies are missing, you'll get runtime errors when trying 
 - 🎨 **Pretty Logging**: Colored and formatted console output
 - 🔒 **Security**: Automatic redaction of sensitive fields
 - ⚡ **Performance**: High-performance logging with Pino
+
+## Installation
+
+```bash
+pnpm install @nestjs-labs/nestjs-pino-extra nestjs-pino @nestjs-labs/pino-http-extra @nestjs/config --save
+```
+
+### Peer Dependencies
+
+- **@nestjs/config** (^4.0.0): Configuration management
+- **nestjs-pino** (^4.4.0): NestJS Pino integration  
+- **@nestjs-labs/pino-http-extra** (^1.0.0): Enhanced pino-http functionality
 
 ## Quick Start
 
