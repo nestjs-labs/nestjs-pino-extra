@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-labs/nestjs-pino-extra/compare/v1.0.3...v1.1.0) (2025-08-05)
+
+
+### Features
+
+* release version 1.2.1 ([5123a68](https://github.com/nestjs-labs/nestjs-pino-extra/commit/5123a68a27ae937e53ef93d22298ce24e00b20c0))
+
 ## [1.0.4](https://github.com/nestjs-labs/nestjs-pino-extra/compare/v1.0.3...v1.0.4) (2025-08-05)
 
 ## [1.0.4](https://github.com/nestjs-labs/nestjs-pino-extra/compare/v1.0.3...v1.0.4) (2025-08-05)
