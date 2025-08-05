@@ -14,6 +14,36 @@
             "type": "chore",
             "message": "*version*",
             "release": "patch"
+          },
+          {
+            "type": "chore",
+            "message": "*dependencies*",
+            "release": "patch"
+          },
+          {
+            "type": "chore",
+            "message": "*eslint*",
+            "release": "patch"
+          },
+          {
+            "type": "chore",
+            "message": "*TypeScript*",
+            "release": "patch"
+          },
+          {
+            "type": "chore",
+            "message": "*package.json*",
+            "release": "patch"
+          },
+          {
+            "type": "docs",
+            "message": "*README*",
+            "release": "patch"
+          },
+          {
+            "type": "chore",
+            "message": "*config*",
+            "release": "patch"
           }
         ]
       }
