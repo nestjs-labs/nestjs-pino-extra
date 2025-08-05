@@ -8,19 +8,23 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./options": {
       "import": "./dist/options.js",
-      "require": "./dist/options.js"
+      "require": "./dist/options.js",
+      "types": "./dist/options.d.ts"
     },
     "./streams": {
       "import": "./dist/streams.js",
-      "require": "./dist/streams.js"
+      "require": "./dist/streams.js",
+      "types": "./dist/streams.d.ts"
     },
     "./serializers": {
       "import": "./dist/serializers.js",
-      "require": "./dist/serializers.js"
+      "require": "./dist/serializers.js",
+      "types": "./dist/serializers.d.ts"
     }
   },
   "scripts": {
