@@ -1,6 +1,6 @@
 {
   "name": "@nestjs-labs/pino-http-extra",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Enhanced pino-http with OpenTelemetry, Loki, file rotation and enterprise features",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -47,8 +47,7 @@
     "logging",
     "opentelemetry",
     "loki",
-    "file-rotation",
-    "middleware"
+    "file-rotation"
   ],
   "author": "NestJS Labs AB",
   "license": "MIT",
