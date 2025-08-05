@@ -9,6 +9,11 @@
           {
             "message": "*\\[python\\]*",
             "release": false
+          },
+          {
+            "type": "chore",
+            "message": "*version*",
+            "release": "patch"
           }
         ]
       }
