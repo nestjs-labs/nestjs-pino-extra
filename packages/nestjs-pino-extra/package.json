@@ -50,7 +50,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
-    "@nestjs-labs/eslint-config": "^1.0.2",
+    "@nestjs-labs/eslint-config": "^1.0.3",
     "@nestjs-labs/pino-http-extra": "workspace:*",
     "@nestjs/config": "^4.0.0",
     "@semantic-release/changelog": "^6.0.3",

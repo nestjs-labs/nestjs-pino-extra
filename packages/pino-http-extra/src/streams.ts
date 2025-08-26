@@ -31,7 +31,6 @@ export function createLokiStreamEntry(
 	level: pino.Level,
 	host: string,
 ): pino.StreamEntry {
-	console.log('createLokiStreamEntry', app, level, host);
 	const stream = pinoLoki({
 		replaceTimestamp: true,
 		batching: true,
