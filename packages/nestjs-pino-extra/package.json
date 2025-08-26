@@ -69,7 +69,7 @@
   "peerDependencies": {
     "@nestjs-labs/pino-http-extra": "workspace:*",
     "@nestjs/config": "^4.0.0",
-    "nestjs-pino": "^4.4.0"
+    "nestjs-pino": "^4.0.0"
   },
   "peerDependenciesMeta": {
     "@nestjs/config": {
