@@ -7,31 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      '@opentelemetry/api':
-        specifier: ^1.9.0
-        version: 1.9.0
-      nestjs-pino:
-        specifier: ^4.4.0
-        version: 4.4.0(@nestjs/common@11.1.4(reflect-metadata@0.2.2)(rxjs@7.8.2))(pino-http@10.5.0)(pino@9.7.0)(rxjs@7.8.2)
-      pino:
-        specifier: ^9.7.0
-        version: 9.7.0
-      pino-http:
-        specifier: ^10.5.0
-        version: 10.5.0
-      pino-loki:
-        specifier: ^2.6.0
-        version: 2.6.0
-      pino-pretty:
-        specifier: ^13.0.0
-        version: 13.0.0
-      pino-std-serializers:
-        specifier: ^7.0.0
-        version: 7.0.0
-      rotating-file-stream:
-        specifier: ^3.2.6
-        version: 3.2.6
     devDependencies:
       '@changesets/cli':
         specifier: ^2.29.6
@@ -57,9 +32,6 @@ importers:
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
-      tslib:
-        specifier: ^2.8.0
-        version: 2.8.1
       turbo:
         specifier: ^2.5.5
         version: 2.5.5
@@ -94,6 +66,9 @@ importers:
       eslint:
         specifier: ^9.32.0
         version: 9.32.0(jiti@2.4.2)
+      pino:
+        specifier: ^9.7.0
+        version: 9.7.0
       prettier:
         specifier: ^3.6.2
         version: 3.6.2
