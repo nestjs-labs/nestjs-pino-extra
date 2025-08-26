@@ -29,3 +29,6 @@ package-lock.json
 
 # Ignore python code from npm
 python
+
+
+**/*.tsbuildinfo
