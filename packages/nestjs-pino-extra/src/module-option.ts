@@ -1,7 +1,7 @@
 /* eslint-disable sort-keys */
 import type { ConfigService } from '@nestjs/config';
 import type { Params } from 'nestjs-pino';
-import type pino from 'pino';
+import type { Level } from 'pino';
 
 import { getMultiDestinationStream, getPinoHttpOption } from '@nestjs-labs/pino-http-extra';
 
@@ -11,7 +11,7 @@ import { getMultiDestinationStream, getPinoHttpOption } from '@nestjs-labs/pino-
 export interface LogConfig {
 	app: string;
 	filename?: string;
-	level: pino.Level;
+	level: Level;
 	loki?: string;
 	spanIdKey: string;
 	traceIdKey: string;
@@ -22,7 +22,7 @@ export interface LogConfig {
  */
 export function extractLogConfig(configService: ConfigService): LogConfig {
 	const app = configService.get<string>('OTLP_SERVICE_NAME') ?? 'app';
-	const level = configService.get<pino.Level>('LOG_LEVEL') ?? 'info';
+	const level = configService.get<Level>('LOG_LEVEL') ?? 'info';
 	const filename = configService.get<string>('LOG_FILE');
 	const loki = configService.get<string>('LOG_LOKI');
 	const spanIdKey = configService.get<string>('OTEL_SPAN_ID_KEY') ?? 'spanId';
@@ -30,7 +30,7 @@ export function extractLogConfig(configService: ConfigService): LogConfig {
 		configService.get<string>('OTEL_TRACE_ID_KEY') ?? 'traceId';
 
 	// Validate log level
-	const validLevels: pino.Level[] = [
+	const validLevels: Level[] = [
 		'fatal',
 		'error',
 		'warn',
