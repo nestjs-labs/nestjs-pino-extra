@@ -45,7 +45,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
-    "@nestjs-labs/eslint-config": "^1.0.2",
+    "@nestjs-labs/eslint-config": "^1.0.3",
     "@nestjs/config": "^4.0.2",
     "eslint": "^9.32.0",
     "prettier": "^3.6.2",
