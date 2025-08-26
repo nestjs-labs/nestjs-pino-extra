@@ -8,7 +8,7 @@ import { getMultiDestinationStream, getPinoHttpOption } from '@nestjs-labs/pino-
 /**
  * Configuration interface for better type safety
  */
-interface LogConfig {
+export interface LogConfig {
 	app: string;
 	filename?: string;
 	level: pino.Level;

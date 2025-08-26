@@ -1,6 +1,6 @@
 {
   "name": "@nestjs-labs/nestjs-pino-extra",
-  "version": "1.2.2",
+  "version": "1.4.0",
   "description": "Enhanced nestjs-pino with OpenTelemetry, Loki, file rotation and enterprise features",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -21,8 +21,7 @@
     "lint:fix": "eslint . --fix && prettier --write .",
     "format": "prettier --write .",
     "dry-run": "npm publish --dry-run",
-    "prepublishOnly": "npm run build",
-    "semantic-release": "semantic-release"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -53,12 +52,6 @@
     "@nestjs-labs/eslint-config": "^1.0.3",
     "@nestjs-labs/pino-http-extra": "workspace:*",
     "@nestjs/config": "^4.0.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^11.0.3",
-    "@semantic-release/npm": "^12.0.2",
-    "@semantic-release/release-notes-generator": "^14.0.3",
     "eslint": "^9.32.0",
     "prettier": "^3.6.2",
     "semantic-release": "^24.2.7",
@@ -94,8 +87,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "dependencies": {
-    "@anolilab/semantic-release-pnpm": "^2.0.2"
   }
 }

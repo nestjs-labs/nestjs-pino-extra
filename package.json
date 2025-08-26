@@ -1,18 +1,18 @@
 {
   "name": "@nestjs-labs/pino-extra-monorepo",
-  "version": "1.0.0",
+  "private": true,
   "description": "NestJS Labs pino extra monorepo",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@10.10.0",
   "scripts": {
     "build": "turbo build",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "format": "turbo format",
-    "typedoc": "typedoc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nestjs-labs/nestjs-pino-extra.git"
+    "typedoc": "typedoc",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish -r --access public",
+    "release:dry-run": "changeset version && changeset publish --dry-run --access public"
   },
   "keywords": [
     "nestjs",
@@ -22,6 +22,10 @@
     "loki",
     "file-rotation"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nestjs-labs/nestjs-pino-extra.git"
+  },
   "author": "NestJS Labs AB",
   "license": "MIT",
   "bugs": {
@@ -29,9 +33,6 @@
   },
   "homepage": "https://nestjs-labs.github.io/nestjs-pino-extra",
   "docs": "https://nestjs-labs.github.io/nestjs-pino-extra",
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "@opentelemetry/api": "^1.9.0",
     "nestjs-pino": "^4.4.0",
@@ -43,19 +44,18 @@
     "rotating-file-stream": "^3.2.6"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.6",
     "@commitlint/cli": "^19.4.1",
     "@commitlint/config-conventional": "^19.4.1",
     "@nestjs-labs/eslint-config": "^1.0.3",
     "@nestjs/config": "^4.0.2",
+    "changeset": "^0.2.6",
     "eslint": "^9.32.0",
     "prettier": "^3.6.2",
     "tslib": "^2.8.0",
     "turbo": "^2.5.5",
     "typedoc": "^0.28.7",
     "typescript": "^5.5.4"
-  },
-  "peerDependencies": {
-    "@nestjs/config": "^4.0.2"
   },
   "config": {
     "commitizen": {
