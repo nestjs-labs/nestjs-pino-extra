@@ -61,6 +61,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
+        continue-on-error: true
       - name: Release nestjs-pino-extra
         if: steps.check-nestjs-pino.outputs.has-changes == 'true'
         working-directory: packages/nestjs-pino-extra
@@ -68,3 +69,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
+        continue-on-error: true
