@@ -2,6 +2,8 @@
 
 Enhanced nestjs-pino with OpenTelemetry, Loki, file rotation and enterprise features.
 
+> **Latest Version**: 1.2.1 - Enhanced with improved OpenTelemetry integration and performance optimizations
+
 [![npm version](https://img.shields.io/npm/v/@nestjs-labs/nestjs-pino-extra.svg)](https://www.npmjs.com/package/@nestjs-labs/nestjs-pino-extra)
 [![License](https://img.shields.io/npm/l/@nestjs-labs/nestjs-pino-extra.svg)](https://github.com/nestjs-labs/nestjs-pino-extra/blob/main/LICENSE)
 
