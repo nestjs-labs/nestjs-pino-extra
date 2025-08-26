@@ -1,0 +1,40 @@
+# Exclude tgz files
+*.tgz
+
+# Exclude source maps in production
+*.map
+
+# Exclude TypeScript build info
+tsconfig.tsbuildinfo
+
+# Exclude source files
+src/
+*.ts
+!*.d.ts
+
+# Exclude development files
+.eslintrc*
+.prettierrc*
+tsconfig.json
+jest.config.*
+*.test.*
+*.spec.*
+
+# Exclude CI/CD files
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Exclude documentation
+docs/
+*.md
+!README.md
+
+# Exclude test files
+test/
+tests/
+__tests__/
+coverage/
+
+# Exclude development dependencies
+node_modules/
