@@ -1,5 +1,16 @@
 # @nestjs-labs/nestjs-pino-extra
 
+## 2.0.0
+
+### Minor Changes
+
+- 26f67e5: add loki auth
+
+### Patch Changes
+
+- Updated dependencies [26f67e5]
+  - @nestjs-labs/pino-http-extra@1.5.0
+
 ## 1.4.2
 
 ### Patch Changes
