@@ -1,6 +1,6 @@
 {
   "name": "@nestjs-labs/nestjs-pino-extra",
-  "version": "2.0.0",
+  "version": "1.5.0",
   "description": "Enhanced nestjs-pino with OpenTelemetry, Loki, file rotation and enterprise features",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

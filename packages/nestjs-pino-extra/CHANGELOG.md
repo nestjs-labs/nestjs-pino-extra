@@ -1,6 +1,6 @@
 # @nestjs-labs/nestjs-pino-extra
 
-## 2.0.0
+## 1.5.0
 
 ### Minor Changes
 
