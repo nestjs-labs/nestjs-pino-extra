@@ -14,3 +14,4 @@ export {
   createPrettyStreamEntry,
   getMultiDestinationStream,
 } from './streams.js';
+export type { LokiOptions } from 'pino-loki';

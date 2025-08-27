@@ -122,7 +122,7 @@ Create multi-destination stream supporting pretty, file, and Loki outputs.
 - `app`: string - Application name
 - `level`: pino.Level (default: 'info') - Log level
 - `filepath`: string (optional) - Log file path for rotation
-- `loki`: string (optional) - Loki host URL
+- `loki`: LokiOptions (optional) - Loki options
 
 **Returns:** MultiStreamRes - Configured multi-stream
 

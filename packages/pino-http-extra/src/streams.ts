@@ -1,6 +1,8 @@
 /* eslint-disable sort-keys */
 import path from 'node:path';
 
+import type { LokiOptions } from 'pino-loki';
+
 import pino from 'pino';
 import { pinoLoki } from 'pino-loki';
 import pinoPretty from 'pino-pretty';
@@ -29,14 +31,14 @@ export function createPrettyStreamEntry(
 export function createLokiStreamEntry(
 	app: string,
 	level: pino.Level,
-	host: string,
+	lokiOptions: LokiOptions,
 ): pino.StreamEntry {
 	const stream = pinoLoki({
-		replaceTimestamp: true,
 		batching: true,
 		interval: 5,
-		host, // Change if Loki hostname is different
 		labels: { app, service: app },
+		replaceTimestamp: true,
+		...lokiOptions,
 	});
 
 	return { level, stream };
@@ -71,12 +73,13 @@ export function getMultiDestinationStream(
 	app: string,
 	level: pino.Level = 'info',
 	filepath?: string,
-	loki?: string,
+	lokiOptions?: LokiOptions,
 ): pino.MultiStreamRes {
 	const entries: pino.StreamEntry[] = [createPrettyStreamEntry(app, level)];
 
 	if (filepath) entries.push(createFileStreamEntry(app, level, filepath));
-	if (loki) entries.push(createLokiStreamEntry(app, level, loki));
+
+	if (lokiOptions) entries.push(createLokiStreamEntry(app, level, lokiOptions));
 
 	return pino.multistream(entries);
 } 

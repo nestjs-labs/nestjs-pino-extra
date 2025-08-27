@@ -3,7 +3,7 @@ import type { ConfigService } from '@nestjs/config';
 import type { Params } from 'nestjs-pino';
 import type { Level } from 'pino';
 
-import { getMultiDestinationStream, getPinoHttpOption } from '@nestjs-labs/pino-http-extra';
+import { getMultiDestinationStream, getPinoHttpOption, type LokiOptions } from '@nestjs-labs/pino-http-extra';
 
 /**
  * Configuration interface for better type safety
@@ -12,9 +12,45 @@ export interface LogConfig {
 	app: string;
 	filename?: string;
 	level: Level;
-	loki?: string;
+	loki?: LokiOptions;
 	spanIdKey: string;
 	traceIdKey: string;
+}
+
+/**
+ * Get Loki options from ConfigService
+ * @param configService - ConfigService
+ * @returns LokiOptions | undefined
+ */
+export function getLokiOptions(configService: ConfigService): LokiOptions | undefined {
+	const host = configService.get<string>('LOG_LOKI_HOST');
+	const username = configService.get<string>('LOG_LOKI_USERNAME');
+	const password = configService.get<string>('LOG_LOKI_PASSWORD');
+	const labels = configService.get<string>('LOG_LOKI_LABELS')?.split(',').reduce((acc, label) => {
+		const [key, value] = label.split('=');
+
+		acc[key] = value;
+
+		return acc;
+	}, {} as Record<string, string>);
+
+	return host ? {
+		host,
+		basicAuth: username && password ? { username, password } : undefined,
+		labels,
+	} : undefined;
+}
+
+/**
+ * Get OpenTelemetry options from ConfigService
+ * @param configService - ConfigService
+ * @returns { spanIdKey: string; traceIdKey: string }
+ */
+export function getOtelOptions(configService: ConfigService): { spanIdKey: string; traceIdKey: string } {
+	const spanIdKey = configService.get<string>('OTEL_SPAN_ID_KEY') ?? 'spanId';
+	const traceIdKey = configService.get<string>('OTEL_TRACE_ID_KEY') ?? 'traceId';
+
+	return { spanIdKey, traceIdKey };
 }
 
 /**
@@ -24,10 +60,9 @@ export function extractLogConfig(configService: ConfigService): LogConfig {
 	const app = configService.get<string>('OTLP_SERVICE_NAME') ?? 'app';
 	const level = configService.get<Level>('LOG_LEVEL') ?? 'info';
 	const filename = configService.get<string>('LOG_FILE');
-	const loki = configService.get<string>('LOG_LOKI');
-	const spanIdKey = configService.get<string>('OTEL_SPAN_ID_KEY') ?? 'spanId';
-	const traceIdKey =
-		configService.get<string>('OTEL_TRACE_ID_KEY') ?? 'traceId';
+
+	const lokiOptions = getLokiOptions(configService);
+	const otelOptions = getOtelOptions(configService);
 
 	// Validate log level
 	const validLevels: Level[] = [
@@ -49,9 +84,9 @@ export function extractLogConfig(configService: ConfigService): LogConfig {
 		app,
 		filename,
 		level,
-		loki,
-		spanIdKey,
-		traceIdKey,
+		loki: lokiOptions,
+		spanIdKey: otelOptions.spanIdKey,
+		traceIdKey: otelOptions.traceIdKey,
 	};
 }
 

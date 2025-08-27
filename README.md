@@ -97,7 +97,10 @@ OTLP_SERVICE_NAME=my-app
 # Optional
 LOG_LEVEL=info
 LOG_FILE=/var/log/app.log
-LOG_LOKI=http://loki:3100
+LOG_LOKI_HOST=http://loki:3100
+LOG_LOKI_USERNAME=admin
+LOG_LOKI_PASSWORD=admin
+LOG_LOKI_LABELS='app=my-app,service=my-app'
 OTEL_SPAN_ID_KEY=spanId
 OTEL_TRACE_ID_KEY=traceId
 ```

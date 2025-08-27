@@ -49,7 +49,17 @@ import pinoHttp from 'pino-http'
 import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra'
 
 const app = express()
-const multiStream = getMultiDestinationStream(app, 'info', 'logs/app.log', 'http://loki:3100')
+const multiStream = getMultiDestinationStream(app, 'info', 'logs/app.log', {
+  host: 'http://loki:3100',
+  basicAuth: {
+    username: 'admin',
+    password: 'admin',
+  },
+  labels: {
+    app,
+    service: app,
+  },
+})
 const pinoHttpOption = getPinoHttpOption()
 const pinoHttpLogger = pinoHttp(pinoHttpOption)
 
