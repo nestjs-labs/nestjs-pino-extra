@@ -1,4 +1,4 @@
-# @nestjs-labs/tracing-sdk
+# tracing-sdk
 
 A comprehensive OpenTelemetry tracing setup SDK for Node.js applications, specifically designed for NestJS projects. This package provides pre-configured OpenTelemetry instrumentation with support for distributed tracing, metrics collection, and observability.
 
@@ -9,19 +9,20 @@ A comprehensive OpenTelemetry tracing setup SDK for Node.js applications, specif
 - 🔍 **Distributed tracing** - W3C Trace Context and B3 propagation support
 - 📈 **Metrics export** - Prometheus metrics endpoint
 - 🎯 **OTLP support** - OpenTelemetry Protocol for trace export
-- 🛡️ **Graceful shutdown** - Proper cleanup on process termination
+- 🛡️ **Graceful shutdown** - Proper cleanup on process termination with HTTP server support
 - ⚡ **Performance optimized** - Batch span processing for high-throughput applications
 - 🎛️ **Flexible configuration** - Class-based design with customizable options
 - 🧪 **Testable** - Easy to mock and test in different environments
+- 📝 **Custom logging** - Support for custom logger implementations
 
 ## Installation
 
 ```bash
-npm install @nestjs-labs/tracing-sdk
+npm install tracing-sdk
 # or
-yarn add @nestjs-labs/tracing-sdk
+yarn add tracing-sdk
 # or
-pnpm add @nestjs-labs/tracing-sdk
+pnpm add tracing-sdk
 ```
 
 ## Quick Start
@@ -42,8 +43,8 @@ OTLP_PROM_ENDPOINT=/metrics
 import { TracingSDK } from '@nestjs-labs/tracing-sdk';
 
 // Create and start the tracing SDK
-const tracing = new TracingSDK();
-await tracing.start();
+const otelSDK = new TracingSDK();
+await otelSDK.start();
 
 // Your application code here...
 
@@ -85,14 +86,16 @@ bootstrap();
 
 ### TracingSDK Options
 
-| Option                   | Type      | Default                         | Description                          |
-| ------------------------ | --------- | ------------------------------- | ------------------------------------ |
-| `serviceName`            | `string`  | `process.env.OTLP_SERVICE_NAME` | Service name for traces and metrics  |
-| `promPort`               | `number`  | `8081`                          | Port for Prometheus metrics endpoint |
-| `promEndpoint`           | `string`  | `'/metrics'`                    | Path for Prometheus metrics endpoint |
-| `enableMetrics`          | `boolean` | `true`                          | Enable Prometheus metrics export     |
-| `enableTracing`          | `boolean` | `true`                          | Enable OpenTelemetry tracing         |
-| `customInstrumentations` | `any[]`   | `[]`                            | Additional custom instrumentations   |
+| Option                  | Type                | Default                         | Description                          |
+| ----------------------- | ------------------- | ------------------------------- | ------------------------------------ |
+| `serviceName`           | `string`            | `process.env.OTLP_SERVICE_NAME` | Service name for traces and metrics  |
+| `promPort`              | `number`            | `8081`                          | Port for Prometheus metrics endpoint |
+| `promEndpoint`          | `string`            | `'/metrics'`                    | Path for Prometheus metrics endpoint |
+| `enableMetrics`         | `boolean`           | `true`                          | Enable Prometheus metrics export     |
+| `enableTracing`         | `boolean`           | `true`                          | Enable OpenTelemetry tracing         |
+| `instrumentations`      | `Instrumentation[]` | `[]`                            | Additional custom instrumentations   |
+| `logger`                | `Logger`            | `console`                       | Custom logger implementation         |
+| `setupGracefulShutdown` | `boolean`           | `true`                          | Auto-setup graceful shutdown         |
 
 ### Environment Variables
 
@@ -107,13 +110,13 @@ bootstrap();
 You can add custom instrumentations to the SDK:
 
 ```typescript
-import { TracingSDK } from '@nestjs-labs/tracing-sdk';
+import { TracingSDK } from 'tracing-sdk';
 import { PrismaInstrumentation } from '@prisma/instrumentation';
 
 // Create tracing SDK with custom instrumentations
 const tracing = new TracingSDK({
   serviceName: 'my-service',
-  customInstrumentations: [new PrismaInstrumentation()],
+  instrumentations: [new PrismaInstrumentation()],
 });
 
 await tracing.start();
@@ -122,7 +125,7 @@ await tracing.start();
 ### Advanced Configuration
 
 ```typescript
-import { TracingSDK } from '@nestjs-labs/tracing-sdk';
+import { TracingSDK } from 'tracing-sdk';
 
 // Create multiple tracing instances with different configs
 const productionTracing = new TracingSDK({
@@ -171,11 +174,15 @@ new TracingSDK(options?: TracingSDKOptions)
 
 - `start(): Promise<void>` - Start the tracing SDK
 - `shutdown(): Promise<void>` - Gracefully shutdown the SDK
+- `setupGracefulShutdown(server: Server, signals?: NodeJS.Signals[]): Promise<void>` - Setup graceful shutdown handlers with HTTP server
 - `isRunning(): boolean` - Check if the SDK is currently running
 - `getSDK(): NodeSDK` - Get the underlying OpenTelemetry NodeSDK instance
 - `getConfig(): Required<TracingSDKOptions>` - Get current configuration
-- `setupGracefulShutdown(signals?: NodeJS.Signals[], options?: { exitAfterShutdown?: boolean; exitCode?: number }): void` - Setup graceful shutdown handlers
-- `setupGracefulShutdownWithExit(signals?: NodeJS.Signals[], exitCode?: number): void` - Setup graceful shutdown handlers that exit the process
+
+### Utility Functions
+
+- `shutdownSDK(server: Server, sdk: NodeSDK, logger?: Logger): Promise<void>` - Shutdown SDK with server cleanup
+- `shutdownTracing(server: Server, sdk: NodeSDK, signals?: NodeJS.Signals[], logger?: Logger): Promise<void>` - Setup graceful shutdown handlers
 
 ## Metrics and Monitoring
 
@@ -198,6 +205,7 @@ The SDK supports multiple trace context propagation formats:
 - **W3C Trace Context** - Standard HTTP headers
 - **W3C Baggage** - Custom metadata propagation
 - **B3** - Zipkin-style propagation
+- **Jaeger** - Jaeger-style propagation
 
 ## Best Practices
 
@@ -256,135 +264,14 @@ Health check endpoints are automatically excluded from tracing to reduce noise:
 }
 ```
 
-### 5. Testing
-
-The class-based design makes it easy to test:
-
-```typescript
-// In your tests
-const mockTracing = new TracingSDK({
-  serviceName: 'test-service',
-  enableMetrics: false,
-  enableTracing: false,
-});
-
-// Mock the start method if needed
-jest.spyOn(mockTracing, 'start').mockResolvedValue();
-```
-
-## Examples
-
-### Basic Express Application
-
-```typescript
-import express from 'express';
-import { TracingSDK } from '@nestjs-labs/tracing-sdk';
-
-const app = express();
-
-async function startApp() {
-  const tracing = new TracingSDK({
-    serviceName: 'express-app',
-  });
-  
-  await tracing.start();
-  tracing.setupGracefulShutdown();
-  
-  app.get('/', (req, res) => {
-    res.json({ message: 'Hello World!' });
-  });
-  
-  app.listen(3000, () => {
-    console.log('Server running on port 3000');
-  });
-}
-
-startApp();
-```
-
-### With Custom Instrumentations
-
-```typescript
-import { TracingSDK } from '@nestjs-labs/tracing-sdk';
-import { PrismaInstrumentation } from '@prisma/instrumentation';
-
-// Create tracing SDK with custom instrumentations
-const tracing = new TracingSDK({
-  serviceName: 'prisma-service',
-  customInstrumentations: [new PrismaInstrumentation()],
-});
-
-await tracing.start();
-```
-
-### Multiple Instances
-
-```typescript
-import { TracingSDK } from '@nestjs-labs/tracing-sdk';
-
-// Create different tracing instances for different services
-const apiTracing = new TracingSDK({
-  serviceName: 'api-service',
-  promPort: 8081,
-});
-
-const workerTracing = new TracingSDK({
-  serviceName: 'worker-service',
-  promPort: 8082,
-  enableMetrics: false, // Worker doesn't need metrics
-});
-
-// Start both
-await Promise.all([
-  apiTracing.start(),
-  workerTracing.start(),
-]);
-```
-
-### Different Shutdown Strategies
-
-```typescript
-// For NestJS applications - don't exit automatically
-const nestTracing = new TracingSDK({ serviceName: 'nestjs-app' });
-nestTracing.setupGracefulShutdown(); // Only shuts down tracing
-
-// For standalone scripts - exit after shutdown
-const scriptTracing = new TracingSDK({ serviceName: 'standalone-script' });
-scriptTracing.setupGracefulShutdownWithExit(); // Exits process after shutdown
-
-// For custom cleanup logic
-const customTracing = new TracingSDK({ serviceName: 'custom-app' });
-customTracing.setupGracefulShutdown();
-
-process.on('SIGTERM', async () => {
-  await customTracing.shutdown();
-  // Your custom cleanup logic here
-  await database.close();
-  await redis.disconnect();
-  process.exit(0);
-});
-```
-
-## Backward Compatibility
-
-For existing code, the default `tracingSDK` instance is still available:
-
-```typescript
-import { tracingSDK } from '@nestjs-labs/tracing-sdk';
-
-// This still works
-await tracingSDK.start();
-await tracingSDK.shutdown();
-```
+## [Examples](https://github.com/iamnivekx/nestjs-prisma-api)
 
 ## Troubleshooting
 
 ### Common Issues
 
 1. **Traces not appearing**: Ensure your OpenTelemetry Collector is properly configured and accessible
-2. **High memory usage**: Consider adjusting batch span processor settings
-3. **Missing instrumentations**: Check that all required dependencies are installed
-4. **Multiple instances**: Be careful not to create too many instances as they consume resources
+2. **Missing instrumentations**: Check that all required dependencies are installed
 
 ### Debug Mode
 
@@ -412,13 +299,13 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the ISC License.
+This project is licensed under the MIT License.
 
 ## Related Packages
 
-- [@nestjs-labs/nestjs-pino-extra](../nestjs-pino-extra/) - Enhanced Pino logging for NestJS
-- [@nestjs-labs/pino-http-extra](../pino-http-extra/) - Enhanced Pino HTTP logging
+- [nestjs-pino-extra](../nestjs-pino-extra/) - Enhanced Pino logging for NestJS
+- [pino-http-extra](../pino-http-extra/) - Enhanced Pino HTTP logging
 
 ## Support
 
-For support and questions, please open an issue on the [GitHub repository](https://github.com/nestjs-labs/nestjs-tracing-sdk/issues).
+For support and questions, please open an issue on the [GitHub repository](https://github.com/nestjs-labs/nestjs-pino-extra/issues).

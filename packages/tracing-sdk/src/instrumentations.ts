@@ -3,7 +3,7 @@ import type { Instrumentation } from '@opentelemetry/instrumentation';
 import { getNodeAutoInstrumentations, type InstrumentationConfigMap } from '@opentelemetry/auto-instrumentations-node';
 
 /**
- * default nestjs instrumentations
+ * nestjs + ioredis + pg + pino + express instrumentations
  * @returns the default nestjs instrumentations
  */
 export function getNestjsConfigMap(): InstrumentationConfigMap {
