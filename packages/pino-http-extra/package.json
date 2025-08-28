@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nestjs-labs/nestjs-pino-extra.git",
+    "url": "https://github.com/nestjs-labs/nestjs-pino-extra",
     "directory": "packages/pino-http-extra"
   },
   "keywords": [

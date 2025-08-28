@@ -1,2 +1,4 @@
 packages:
-  - 'packages/*'
+  - packages/*
+overrides:
+  '@nestjs-labs/tracing-sdk': link:packages/tracing-sdk

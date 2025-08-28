@@ -24,7 +24,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nestjs-labs/nestjs-pino-extra.git"
+    "url": "https://github.com/nestjs-labs/nestjs-pino-extra"
   },
   "author": "NestJS Labs AB",
   "license": "MIT",
@@ -55,5 +55,8 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "dependencies": {
+    "@nestjs-labs/tracing-sdk": "link:packages/tracing"
   }
 }
