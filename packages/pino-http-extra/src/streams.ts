@@ -12,16 +12,16 @@ import { createStream } from 'rotating-file-stream';
  * create pretty stream entry
  */
 export function createPrettyStreamEntry(
-	_app: string,
-	level: pino.Level,
+  _app: string,
+  level: pino.Level,
 ): pino.StreamEntry {
-	const stream = pinoPretty({
-		translateTime: false,
-		hideObject: false,
-		colorize: true,
-	});
+  const stream = pinoPretty({
+    translateTime: false,
+    hideObject: false,
+    colorize: true,
+  });
 
-	return { level, stream };
+  return { level, stream };
 }
 
 /**
@@ -29,19 +29,19 @@ export function createPrettyStreamEntry(
  * https://github.com/pinojs/pino/blob/master/docs/transports.md#pino-loki
  */
 export function createLokiStreamEntry(
-	app: string,
-	level: pino.Level,
-	lokiOptions: LokiOptions,
+  app: string,
+  level: pino.Level,
+  lokiOptions: LokiOptions,
 ): pino.StreamEntry {
-	const stream = pinoLoki({
-		batching: true,
-		interval: 5,
-		labels: { app, service: app },
-		replaceTimestamp: true,
-		...lokiOptions,
-	});
+  const stream = pinoLoki({
+    batching: true,
+    interval: 5,
+    labels: { app, service: app },
+    replaceTimestamp: true,
+    ...lokiOptions,
+  });
 
-	return { level, stream };
+  return { level, stream };
 }
 
 /**
@@ -49,20 +49,20 @@ export function createLokiStreamEntry(
  * https://github.com/iccicci/rotating-file-stream?tab=readme-ov-file#initialrotation
  */
 export function createFileStreamEntry(
-	_app: string,
-	level: pino.Level,
-	filepath: string,
+  _app: string,
+  level: pino.Level,
+  filepath: string,
 ): pino.StreamEntry {
-	const { base, dir } = path.parse(filepath);
+  const { base, dir } = path.parse(filepath);
 
-	const stream = createStream(base, {
-		size: '1G', // 1G rotate every 1 Gigabyte written
-		interval: '1d', // rotate daily
-		compress: 'gzip', // compress rotated files
-		path: dir,
-	});
+  const stream = createStream(base, {
+    size: '1G', // 1G rotate every 1 Gigabyte written
+    interval: '1d', // rotate daily
+    compress: 'gzip', // compress rotated files
+    path: dir,
+  });
 
-	return { level, stream };
+  return { level, stream };
 }
 
 /**
@@ -70,16 +70,16 @@ export function createFileStreamEntry(
  * support pretty, file, loki
  */
 export function getMultiDestinationStream(
-	app: string,
-	level: pino.Level = 'info',
-	filepath?: string,
-	lokiOptions?: LokiOptions,
+  app: string,
+  level: pino.Level = 'info',
+  filepath?: string,
+  lokiOptions?: LokiOptions,
 ): pino.MultiStreamRes {
-	const entries: pino.StreamEntry[] = [createPrettyStreamEntry(app, level)];
+  const entries: pino.StreamEntry[] = [createPrettyStreamEntry(app, level)];
 
-	if (filepath) entries.push(createFileStreamEntry(app, level, filepath));
+  if (filepath) entries.push(createFileStreamEntry(app, level, filepath));
 
-	if (lokiOptions) entries.push(createLokiStreamEntry(app, level, lokiOptions));
+  if (lokiOptions) entries.push(createLokiStreamEntry(app, level, lokiOptions));
 
-	return pino.multistream(entries);
-} 
+  return pino.multistream(entries);
+}

@@ -3,18 +3,22 @@ import type { ConfigService } from '@nestjs/config';
 import type { Params } from 'nestjs-pino';
 import type { Level } from 'pino';
 
-import { getMultiDestinationStream, getPinoHttpOption, type LokiOptions } from '@nestjs-labs/pino-http-extra';
+import {
+  getMultiDestinationStream,
+  getPinoHttpOption,
+  type LokiOptions,
+} from '@nestjs-labs/pino-http-extra';
 
 /**
  * Configuration interface for better type safety
  */
 export interface LogConfig {
-	app: string;
-	filename?: string;
-	level: Level;
-	loki?: LokiOptions;
-	spanIdKey: string;
-	traceIdKey: string;
+  app: string;
+  filename?: string;
+  level: Level;
+  loki?: LokiOptions;
+  spanIdKey: string;
+  traceIdKey: string;
 }
 
 /**
@@ -22,23 +26,33 @@ export interface LogConfig {
  * @param configService - ConfigService
  * @returns LokiOptions | undefined
  */
-export function getLokiOptions(configService: ConfigService): LokiOptions | undefined {
-	const host = configService.get<string>('LOG_LOKI_HOST');
-	const username = configService.get<string>('LOG_LOKI_USERNAME');
-	const password = configService.get<string>('LOG_LOKI_PASSWORD');
-	const labels = configService.get<string>('LOG_LOKI_LABELS')?.split(',').reduce((acc, label) => {
-		const [key, value] = label.split('=');
+export function getLokiOptions(
+  configService: ConfigService,
+): LokiOptions | undefined {
+  const host = configService.get<string>('LOG_LOKI_HOST');
+  const username = configService.get<string>('LOG_LOKI_USERNAME');
+  const password = configService.get<string>('LOG_LOKI_PASSWORD');
+  const labels = configService
+    .get<string>('LOG_LOKI_LABELS')
+    ?.split(',')
+    .reduce(
+      (acc, label) => {
+        const [key, value] = label.split('=');
 
-		acc[key] = value;
+        acc[key] = value;
 
-		return acc;
-	}, {} as Record<string, string>);
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
 
-	return host ? {
-		host,
-		basicAuth: username && password ? { username, password } : undefined,
-		labels,
-	} : undefined;
+  return host
+    ? {
+        host,
+        basicAuth: username && password ? { username, password } : undefined,
+        labels,
+      }
+    : undefined;
 }
 
 /**
@@ -46,60 +60,64 @@ export function getLokiOptions(configService: ConfigService): LokiOptions | unde
  * @param configService - ConfigService
  * @returns { spanIdKey: string; traceIdKey: string }
  */
-export function getOtelOptions(configService: ConfigService): { spanIdKey: string; traceIdKey: string } {
-	const spanIdKey = configService.get<string>('OTEL_SPAN_ID_KEY') ?? 'spanId';
-	const traceIdKey = configService.get<string>('OTEL_TRACE_ID_KEY') ?? 'traceId';
+export function getOtelOptions(configService: ConfigService): {
+  spanIdKey: string;
+  traceIdKey: string;
+} {
+  const spanIdKey = configService.get<string>('OTEL_SPAN_ID_KEY') ?? 'spanId';
+  const traceIdKey =
+    configService.get<string>('OTEL_TRACE_ID_KEY') ?? 'traceId';
 
-	return { spanIdKey, traceIdKey };
+  return { spanIdKey, traceIdKey };
 }
 
 /**
  * Extract and validate log configuration from ConfigService
  */
 export function extractLogConfig(configService: ConfigService): LogConfig {
-	const app = configService.get<string>('OTLP_SERVICE_NAME') ?? 'app';
-	const level = configService.get<Level>('LOG_LEVEL') ?? 'info';
-	const filename = configService.get<string>('LOG_FILE');
+  const app = configService.get<string>('OTLP_SERVICE_NAME') ?? 'app';
+  const level = configService.get<Level>('LOG_LEVEL') ?? 'info';
+  const filename = configService.get<string>('LOG_FILE');
 
-	const lokiOptions = getLokiOptions(configService);
-	const otelOptions = getOtelOptions(configService);
+  const lokiOptions = getLokiOptions(configService);
+  const otelOptions = getOtelOptions(configService);
 
-	// Validate log level
-	const validLevels: Level[] = [
-		'fatal',
-		'error',
-		'warn',
-		'info',
-		'debug',
-		'trace',
-	];
+  // Validate log level
+  const validLevels: Level[] = [
+    'fatal',
+    'error',
+    'warn',
+    'info',
+    'debug',
+    'trace',
+  ];
 
-	if (!validLevels.includes(level)) {
-		throw new Error(
-			`Invalid LOG_LEVEL: ${level}. Must be one of: ${validLevels.join(', ')}`,
-		);
-	}
+  if (!validLevels.includes(level)) {
+    throw new Error(
+      `Invalid LOG_LEVEL: ${level}. Must be one of: ${validLevels.join(', ')}`,
+    );
+  }
 
-	return {
-		app,
-		filename,
-		level,
-		loki: lokiOptions,
-		spanIdKey: otelOptions.spanIdKey,
-		traceIdKey: otelOptions.traceIdKey,
-	};
+  return {
+    app,
+    filename,
+    level,
+    loki: lokiOptions,
+    spanIdKey: otelOptions.spanIdKey,
+    traceIdKey: otelOptions.traceIdKey,
+  };
 }
 
 export function getPinoHttpFromConfig(config: LogConfig): Params['pinoHttp'] {
-	return [
-		getPinoHttpOption(config.level, config.spanIdKey, config.traceIdKey),
-		getMultiDestinationStream(
-			config.app,
-			config.level,
-			config.filename,
-			config.loki,
-		),
-	];
+  return [
+    getPinoHttpOption(config.level, config.spanIdKey, config.traceIdKey),
+    getMultiDestinationStream(
+      config.app,
+      config.level,
+      config.filename,
+      config.loki,
+    ),
+  ];
 }
 
 /**
@@ -109,16 +127,16 @@ export function getPinoHttpFromConfig(config: LogConfig): Params['pinoHttp'] {
  * @returns NestjsPinoModuleOptions
  */
 export function getParamsFromConfig(
-	config: LogConfig,
-	overrides?: Params,
+  config: LogConfig,
+  overrides?: Params,
 ): Params {
-	const pinoHttp = getPinoHttpFromConfig(config);
-	const params: Params = {
-		pinoHttp,
-		exclude: [{ method: 0, path: '/health' }],
-	};
+  const pinoHttp = getPinoHttpFromConfig(config);
+  const params: Params = {
+    pinoHttp,
+    exclude: [{ method: 0, path: '/health' }],
+  };
 
-	return Object.assign(params, overrides);
+  return Object.assign(params, overrides);
 }
 
 /**
@@ -139,10 +157,10 @@ export function getParamsFromConfig(
  * ```
  */
 export function getNestjsPinoModuleOptions(
-	configService: ConfigService,
-	overrides: Params = {},
+  configService: ConfigService,
+  overrides: Params = {},
 ): Params {
-	const config = extractLogConfig(configService);
+  const config = extractLogConfig(configService);
 
-	return getParamsFromConfig(config, overrides);
-} 
+  return getParamsFromConfig(config, overrides);
+}

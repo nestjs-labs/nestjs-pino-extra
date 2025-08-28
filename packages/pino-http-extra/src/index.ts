@@ -3,7 +3,6 @@
  * Enhanced pino-http with OpenTelemetry, Loki, file rotation and enterprise features
  */
 
-
 // re-export nestjs-pino module options
 export { getOtelFormatters } from './formatters.js';
 export { getPinoHttpOption } from './options.js';

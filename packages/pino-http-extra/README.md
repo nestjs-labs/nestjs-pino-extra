@@ -27,28 +27,39 @@ npm install @nestjs-labs/pino-http-extra
 ### Basic Setup
 
 ```typescript
-import pino from 'pino'
-import pinoHttp from 'pino-http'
-import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra'
+import pino from 'pino';
+import pinoHttp from 'pino-http';
+import {
+  getPinoHttpOption,
+  getMultiDestinationStream,
+} from '@nestjs-labs/pino-http-extra';
 
-const level = process.env.LOG_LEVEL || 'info'
-const app = process.env.APP_NAME || 'my-app'
-const pinoHttpOption = getPinoHttpOption(level, 'spanId', 'traceId')
-const filename = process.env.LOG_FILE || 'logs/app.log'
-const loki = process.env.LOKI_HOST
-const multiStream = getMultiDestinationStream(app, level as pino.Level, filename, loki)
-const pinoHttpLogger = pinoHttp(pinoHttpOption)
-const logger = pino(pinoHttpOption, multiStream)
+const level = process.env.LOG_LEVEL || 'info';
+const app = process.env.APP_NAME || 'my-app';
+const pinoHttpOption = getPinoHttpOption(level, 'spanId', 'traceId');
+const filename = process.env.LOG_FILE || 'logs/app.log';
+const loki = process.env.LOKI_HOST;
+const multiStream = getMultiDestinationStream(
+  app,
+  level as pino.Level,
+  filename,
+  loki,
+);
+const pinoHttpLogger = pinoHttp(pinoHttpOption);
+const logger = pino(pinoHttpOption, multiStream);
 ```
 
 ### Express.js Integration
 
 ```typescript
-import express from 'express'
-import pinoHttp from 'pino-http'
-import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra'
+import express from 'express';
+import pinoHttp from 'pino-http';
+import {
+  getPinoHttpOption,
+  getMultiDestinationStream,
+} from '@nestjs-labs/pino-http-extra';
 
-const app = express()
+const app = express();
 const multiStream = getMultiDestinationStream(app, 'info', 'logs/app.log', {
   host: 'http://loki:3100',
   basicAuth: {
@@ -59,38 +70,38 @@ const multiStream = getMultiDestinationStream(app, 'info', 'logs/app.log', {
     app,
     service: app,
   },
-})
-const pinoHttpOption = getPinoHttpOption()
-const pinoHttpLogger = pinoHttp(pinoHttpOption)
+});
+const pinoHttpOption = getPinoHttpOption();
+const pinoHttpLogger = pinoHttp(pinoHttpOption);
 
-app.use(pinoHttpLogger)
+app.use(pinoHttpLogger);
 
 app.get('/', (req, res) => {
-  req.log.info('Hello from pino-http-extra!')
-  res.json({ message: 'Hello World!' })
-})
+  req.log.info('Hello from pino-http-extra!');
+  res.json({ message: 'Hello World!' });
+});
 
 app.listen(3000, () => {
-  console.log('Server running on port 3000')
-})
+  console.log('Server running on port 3000');
+});
 ```
 
 ### Fastify Integration
 
 ```typescript
-import Fastify from 'fastify'
-import { getPinoHttpOption } from '@nestjs-labs/pino-http-extra'
+import Fastify from 'fastify';
+import { getPinoHttpOption } from '@nestjs-labs/pino-http-extra';
 
 const fastify = Fastify({
-  logger: getPinoHttpOption()
-})
+  logger: getPinoHttpOption(),
+});
 
 fastify.get('/', async (request, reply) => {
-  request.log.info('Hello from pino-http-extra!')
-  return { message: 'Hello World!' }
-})
+  request.log.info('Hello from pino-http-extra!');
+  return { message: 'Hello World!' };
+});
 
-fastify.listen({ port: 3000 })
+fastify.listen({ port: 3000 });
 ```
 
 ## API Reference
@@ -102,6 +113,7 @@ fastify.listen({ port: 3000 })
 Get pino-http options with OpenTelemetry integration and security features.
 
 **Parameters:**
+
 - `level`: `string` (default: `'info'`) - Log level
 - `spanIdKey`: `string` (default: `'spanId'`) - OpenTelemetry span ID key
 - `traceIdKey`: `string` (default: `'traceId'`) - OpenTelemetry trace ID key
@@ -113,6 +125,7 @@ Get pino-http options with OpenTelemetry integration and security features.
 Create multi-destination stream supporting pretty, file, and Loki outputs.
 
 **Parameters:**
+
 - `app`: `string` - Application name for Loki labels
 - `level`: `pino.Level` (default: `'info'`) - Log level
 - `filepath`: `string` (optional) - Log file path for rotation
@@ -125,14 +138,14 @@ Create multi-destination stream supporting pretty, file, and Loki outputs.
 ### Custom Logging
 
 ```typescript
-import pino from 'pino'
-import { getPinoHttpOption } from '@nestjs-labs/pino-http-extra'
+import pino from 'pino';
+import { getPinoHttpOption } from '@nestjs-labs/pino-http-extra';
 
-const logger = pino(getPinoHttpOption())
+const logger = pino(getPinoHttpOption());
 
-logger.info('Application started')
-logger.warn('Warning message')
-logger.error('Error occurred', { error: new Error('Something went wrong') })
+logger.info('Application started');
+logger.warn('Warning message');
+logger.error('Error occurred', { error: new Error('Something went wrong') });
 ```
 
 ### HTTP Request Logging
@@ -141,9 +154,9 @@ The middleware automatically logs HTTP requests with:
 
 - **Request ID**: Automatically generated and tracked
 - **Response Time**: Automatic timing of request duration
-- **Status Code Logging**: 
+- **Status Code Logging**:
   - 2xx: `info` level
-  - 4xx: `warn` level  
+  - 4xx: `warn` level
   - 5xx: `error` level
   - 3xx: `silent` level
 - **Sensitive Data Redaction**: Automatic redaction of password fields
@@ -175,4 +188,4 @@ The middleware automatically logs HTTP requests with:
 
 ## License
 
-MIT 
+MIT

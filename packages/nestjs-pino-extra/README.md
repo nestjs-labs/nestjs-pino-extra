@@ -23,7 +23,7 @@ pnpm install @nestjs-labs/nestjs-pino-extra nestjs-pino @nestjs-labs/pino-http-e
 ### Peer Dependencies
 
 - **@nestjs/config** (^4.0.0): Configuration management
-- **nestjs-pino** (^4.4.0): NestJS Pino integration  
+- **nestjs-pino** (^4.4.0): NestJS Pino integration
 - **@nestjs-labs/pino-http-extra** (^1.0.0): Enhanced pino-http functionality
 
 ## Quick Start
@@ -40,7 +40,7 @@ import { LoggerModule } from '@nestjs-labs/nestjs-pino-extra';
     ConfigModule.forRoot(),
     LoggerModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => 
+      useFactory: (configService: ConfigService) =>
         getNestjsPinoModuleOptions(configService),
       inject: [ConfigService],
     }),
@@ -75,7 +75,7 @@ import { LoggerModule } from '@nestjs-labs/nestjs-pino-extra';
     ConfigModule.forRoot(),
     LoggerModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => 
+      useFactory: (configService: ConfigService) =>
         getNestjsPinoModuleOptions(configService, {
           exclude: [
             { method: 0, path: '/health' },
@@ -98,6 +98,7 @@ export class AppModule {}
 Get nestjs-pino module options with improved type safety and validation.
 
 **Parameters:**
+
 - `configService`: ConfigService - NestJS configuration service
 - `overrides`: Params (optional) - Overrides for the module options
 
@@ -108,6 +109,7 @@ Get nestjs-pino module options with improved type safety and validation.
 Get pino-http options with OpenTelemetry integration.
 
 **Parameters:**
+
 - `level`: string (default: 'info') - Log level
 - `spanIdKey`: string (default: 'spanId') - OpenTelemetry span ID key
 - `traceIdKey`: string (default: 'traceId') - OpenTelemetry trace ID key
@@ -119,6 +121,7 @@ Get pino-http options with OpenTelemetry integration.
 Create multi-destination stream supporting pretty, file, and Loki outputs.
 
 **Parameters:**
+
 - `app`: string - Application name
 - `level`: pino.Level (default: 'info') - Log level
 - `filepath`: string (optional) - Log file path for rotation
@@ -147,6 +150,7 @@ export class AppService {
 ### HTTP Request Logging
 
 The middleware automatically logs HTTP requests with:
+
 - Request ID generation
 - Response time tracking
 - Status code-based log levels
@@ -154,4 +158,4 @@ The middleware automatically logs HTTP requests with:
 
 ## License
 
-MIT 
+MIT
