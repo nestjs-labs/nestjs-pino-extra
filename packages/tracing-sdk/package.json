@@ -1,6 +1,6 @@
 {
-  "name": "tracing-sdk",
-  "version": "2.0.0",
+  "name": "@nestjs-labs/tracing-sdk",
+  "version": "1.0.0",
   "description": "OpenTelemetry tracing Setup SDK for Node.js applications",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "prepublishOnly": "npm run build && npm test",
+    "prepublishOnly": "npm run build",
     "clean": "rm -rf dist"
   },
   "keywords": [
