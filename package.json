@@ -43,7 +43,7 @@
     "eslint": "^9.32.0",
     "prettier": "^3.6.2",
     "turbo": "^2.5.5",
-    "typedoc": "^0.28.7",
+    "typedoc": "^0.28.12",
     "typescript": "^5.5.4"
   },
   "config": {
@@ -55,8 +55,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "dependencies": {
-    "@nestjs-labs/tracing-sdk": "link:packages/tracing"
   }
 }

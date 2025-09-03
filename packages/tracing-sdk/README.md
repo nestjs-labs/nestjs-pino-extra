@@ -31,7 +31,7 @@ pnpm add tracing-sdk
 
 Set up your environment variables in a `.env` file:
 
-```env
+```bash
 OTLP_SERVICE_NAME=my-service
 OTLP_PROM_PORT=8081
 OTLP_PROM_ENDPOINT=/metrics
@@ -277,7 +277,7 @@ Health check endpoints are automatically excluded from tracing to reduce noise:
 
 Enable debug logging by setting the `OTEL_LOG_LEVEL` environment variable:
 
-```env
+```bash
 OTEL_LOG_LEVEL=debug
 ```
 

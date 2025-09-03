@@ -1,11 +1,35 @@
 {
+  "name": "Nestjs Pino Extra Packages",
   "entryPoints": ["packages/*"],
+  "entryPointStrategy": "packages",
   "out": "./_docs",
   "exclude": ["**/node_modules/**", "**/test/**"],
-  "name": "Nestjs Pino Extra Packages",
-  "entryPointStrategy": "packages",
   "sort": ["source-order"],
   "searchInComments": true,
   "includeVersion": true,
-  "readme": "README.md"
+  "readme": "README.md",
+  "hostedBaseUrl": "https://nestjs-labs.github.io/nestjs-pino-extra",
+  "navigationLinks": {
+    "Docs": "https://nestjs-labs.github.io/nestjs-pino-extra",
+    "Nestjs Pino Extra": "https://www.npmjs.com/package/@nestjs-labs/nestjs-pino-extra",
+    "Pino Http Extra": "https://www.npmjs.com/package/@nestjs-labs/pino-http-extra",
+    "NPM Tracing SDK": "https://www.npmjs.com/package/tracing-sdk",
+    "GitHub": "https://github.com/nestjs-labs/nestjs-pino-extra"
+  },
+  "highlightLanguages": [
+    "bash",
+    "typescript",
+    "tsx",
+    "css",
+    "js",
+    "json",
+    "jsonc",
+    "python",
+    "yaml",
+    "markdown"
+  ],
+  "markdownItOptions": {
+    "html": true
+  },
+  "suppressCommentWarningsInDeclarationFiles": true
 }

@@ -23,6 +23,18 @@ import { getSdkInstrumentations } from './instrumentations.js';
 
 export type Logger = Pick<Console, 'log' | 'warn' | 'error'>;
 
+/**
+ * TracingSDKOptions
+ * @interface TracingSDKOptions
+ * @property logger - Logger
+ * @property serviceName - Service name
+ * @property promPort - Prometheus port
+ * @property promEndpoint - Prometheus endpoint
+ * @property enableMetrics - Enable metrics
+ * @property enableTracing - Enable tracing
+ * @property instrumentations - Instrumentations
+ * @property setupGracefulShutdown - Setup graceful shutdown
+ */
 export interface TracingSDKOptions {
   logger?: Logger;
   serviceName?: string;
@@ -43,6 +55,12 @@ const {
   OTLP_SERVICE_NAME,
 } = process.env
 
+/**
+ * TracingSDK class
+ * @class TracingSDK
+ * @param options - TracingSDKOptions
+ * @returns TracingSDK
+ */
 export class TracingSDK {
   private isStarted = false;
   private sdk: NodeSDK;

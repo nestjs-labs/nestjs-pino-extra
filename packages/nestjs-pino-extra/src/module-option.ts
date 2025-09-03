@@ -11,6 +11,13 @@ import {
 
 /**
  * Configuration interface for better type safety
+ * @interface LogConfig
+ * @property app - App name
+ * @property filename - Log file name
+ * @property level - Log level
+ * @property loki - Loki options
+ * @property spanIdKey - Span ID key
+ * @property traceIdKey - Trace ID key
  */
 export interface LogConfig {
   app: string;
@@ -35,7 +42,7 @@ export function getLokiOptions(
   const labels = configService
     .get<string>('LOG_LOKI_LABELS')
     ?.split(',')
-    .reduce(
+    ?.reduce(
       (acc, label) => {
         const [key, value] = label.split('=');
 
