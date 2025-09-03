@@ -187,7 +187,7 @@ export async function shutdownSDK(server: Server, sdk: NodeSDK, logger?: Logger)
 }
 
 
-export async function shutdownTracing(server: Server, sdk: NodeSDK, signals = ['SIGTERM', 'SIGINT'], logger?: Logger) {
+export async function shutdownTracing(server: Server, sdk: NodeSDK, signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'], logger?: Logger) {
   signals.forEach((signal) => {
     process.on(signal, async () => {
       await shutdownSDK(server, sdk, logger);
