@@ -1,5 +1,11 @@
 # tracing-sdk
 
+## 1.0.2
+
+### Patch Changes
+
+- 4e84c84: Refactor graceful shutdown logic for robustness and correct async handling.
+
 ## 1.0.1
 
 ### Patch Changes
