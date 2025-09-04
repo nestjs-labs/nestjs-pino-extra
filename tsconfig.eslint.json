@@ -1,9 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "composite": false,
-    "noUnusedLocals": true
-  },
-  "include": ["packages/**/*.ts", "**/*.ts", "eslint.config.mjs"],
-  "exclude": ["pnpm-lock.yaml"]
+  "include": [
+    "packages/**/src/**/*",
+    "packages/**/vitest.config.mts",
+    "packages/**/tsup.config.ts",
+    "packages/**/.prettierrc.mjs",
+    ".prettierrc.mjs",
+    "eslint.config.mjs"
+  ]
 }

@@ -8,11 +8,13 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./module-option": {
       "import": "./dist/module-option.js",
-      "require": "./dist/module-option.js"
+      "require": "./dist/module-option.js",
+      "types": "./dist/module-option.d.ts"
     }
   },
   "scripts": {

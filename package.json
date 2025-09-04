@@ -8,6 +8,7 @@
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "format": "turbo format",
+    "test": "turbo run test",
     "typedoc": "typedoc",
     "changeset": "changeset",
     "version-packages": "changeset version",
@@ -55,5 +56,9 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "dependencies": {
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   }
 }
