@@ -29,22 +29,14 @@ npm install @nestjs-labs/pino-http-extra
 ```typescript
 import pino from 'pino';
 import pinoHttp from 'pino-http';
-import {
-  getPinoHttpOption,
-  getMultiDestinationStream,
-} from '@nestjs-labs/pino-http-extra';
+import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra';
 
 const level = process.env.LOG_LEVEL || 'info';
 const app = process.env.APP_NAME || 'my-app';
 const pinoHttpOption = getPinoHttpOption(level, 'spanId', 'traceId');
 const filename = process.env.LOG_FILE || 'logs/app.log';
 const loki = process.env.LOKI_HOST;
-const multiStream = getMultiDestinationStream(
-  app,
-  level as pino.Level,
-  filename,
-  loki,
-);
+const multiStream = getMultiDestinationStream(app, level as pino.Level, filename, loki);
 const pinoHttpLogger = pinoHttp(pinoHttpOption);
 const logger = pino(pinoHttpOption, multiStream);
 ```
@@ -54,10 +46,7 @@ const logger = pino(pinoHttpOption, multiStream);
 ```typescript
 import express from 'express';
 import pinoHttp from 'pino-http';
-import {
-  getPinoHttpOption,
-  getMultiDestinationStream,
-} from '@nestjs-labs/pino-http-extra';
+import { getPinoHttpOption, getMultiDestinationStream } from '@nestjs-labs/pino-http-extra';
 
 const app = express();
 const multiStream = getMultiDestinationStream(app, 'info', 'logs/app.log', {

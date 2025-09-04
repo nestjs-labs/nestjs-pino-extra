@@ -1,5 +1,3 @@
-
-
 /**
  * https://www.npmjs.com/package/@opentelemetry/sdk-node
  * https://github.com/open-telemetry/opentelemetry-js#package-version-compatibility
@@ -53,7 +51,7 @@ const {
   OTLP_PROM_PORT,
   // service name, default: unknown
   OTLP_SERVICE_NAME,
-} = process.env
+} = process.env;
 
 /**
  * TracingSDK class
@@ -135,7 +133,7 @@ export class TracingSDK {
     try {
       this.sdk.start();
       this.isStarted = true;
-      this.logger?.log(`TracingSDK started successfully for service: ${this.options.serviceName}`);
+      this.logger?.log(`Tracing SDK started successfully for service: ${this.options.serviceName}`);
     } catch (error) {
       this.logger?.error('Failed to start TracingSDK:', error);
       throw error;
@@ -157,21 +155,22 @@ export class TracingSDK {
       this.isStarted = false;
       this.logger?.log('TracingSDK shut down successfully');
     } catch (error) {
-      this.logger?.error(error);
-      this.logger?.error(`Failed to shutdown TracingSDK ${error}`);
+      this.logger?.error('Failed to shutdown TracingSDK', error);
     }
   }
 
-
   /**
    * Setup graceful shutdown
+   * @param server - The http server instance to close
+   * @param signals - The signals to listen for
    */
-  async setupGracefulShutdown(server: Server, signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT']): Promise<void> {
-    await shutdownTracing(server, this.sdk, signals, this.logger);
+  setupGracefulShutdown(server: Server, signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT']): void {
+    shutdownTracing(server, this.sdk, signals, this.logger);
   }
 
   /**
    * Check if the SDK is currently running
+   * @returns true if the SDK is running, false otherwise
    */
   isRunning(): boolean {
     return this.isStarted;
@@ -179,6 +178,7 @@ export class TracingSDK {
 
   /**
    * Get the underlying NodeSDK instance
+   * @returns The NodeSDK instance
    */
   getSDK(): NodeSDK {
     return this.sdk;
@@ -186,6 +186,7 @@ export class TracingSDK {
 
   /**
    * Get current configuration
+   * @returns The current configuration
    */
   getConfig(): Required<TracingSDKOptions> {
     return { ...this.options };
@@ -194,20 +195,49 @@ export class TracingSDK {
 
 /**
  * Shutdown the OpenTelemetry SDK
+ * @param server - The http server instance to close
+ * @param sdk - The OpenTelemetry SDK instance
+ * @param logger - The logger
  */
-export async function shutdownSDK(server: Server, sdk: NodeSDK, logger?: Logger) {
-  server.close(async () => {
-    await sdk
-      .shutdown()
-      .then(() => logger?.log('OpenTelemetry SDK shut down successfully.'))
-      .catch((err: unknown) => logger?.error(err));
-  })
+export async function shutdownSDK(server: Server, sdk: NodeSDK, logger?: Logger): Promise<void> {
+  logger?.log('Closing http server...');
+  await new Promise<void>((resolve, reject) => {
+    server.close((err) => {
+      if (err) {
+        logger?.error('Error closing server', err);
+
+        return reject(err);
+      }
+
+      logger?.log('Http server closed.');
+      resolve();
+    });
+  });
+
+  try {
+    await sdk.shutdown();
+    logger?.log('OpenTelemetry SDK shut down successfully.');
+  } catch (err) {
+    logger?.error('Error shutting down SDK', err);
+  }
 }
 
-
-export async function shutdownTracing(server: Server, sdk: NodeSDK, signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'], logger?: Logger) {
+/**
+ * Register signal handlers for graceful shutdown
+ * @param server - The http server instance to close
+ * @param sdk - The OpenTelemetry SDK instance
+ * @param signals - The signals to listen for
+ * @param logger - The logger
+ */
+export function shutdownTracing(
+  server: Server,
+  sdk: NodeSDK,
+  signals: NodeJS.Signals[] = ['SIGTERM', 'SIGINT'],
+  logger?: Logger,
+): void {
   signals.forEach((signal) => {
     process.on(signal, async () => {
+      logger?.log(`Received ${signal}, shutting down...`);
       await shutdownSDK(server, sdk, logger);
     });
   });

@@ -11,10 +11,7 @@ import { createStream } from 'rotating-file-stream';
 /**
  * create pretty stream entry
  */
-export function createPrettyStreamEntry(
-  _app: string,
-  level: pino.Level,
-): pino.StreamEntry {
+export function createPrettyStreamEntry(_app: string, level: pino.Level): pino.StreamEntry {
   const stream = pinoPretty({
     translateTime: false,
     hideObject: false,
@@ -28,11 +25,7 @@ export function createPrettyStreamEntry(
  * create loki stream entry
  * https://github.com/pinojs/pino/blob/master/docs/transports.md#pino-loki
  */
-export function createLokiStreamEntry(
-  app: string,
-  level: pino.Level,
-  lokiOptions: LokiOptions,
-): pino.StreamEntry {
+export function createLokiStreamEntry(app: string, level: pino.Level, lokiOptions: LokiOptions): pino.StreamEntry {
   const stream = pinoLoki({
     batching: true,
     interval: 5,
@@ -48,11 +41,7 @@ export function createLokiStreamEntry(
  * create file stream entry
  * https://github.com/iccicci/rotating-file-stream?tab=readme-ov-file#initialrotation
  */
-export function createFileStreamEntry(
-  _app: string,
-  level: pino.Level,
-  filepath: string,
-): pino.StreamEntry {
+export function createFileStreamEntry(_app: string, level: pino.Level, filepath: string): pino.StreamEntry {
   const { base, dir } = path.parse(filepath);
 
   const stream = createStream(base, {

@@ -68,13 +68,13 @@ async function bootstrap() {
     enableMetrics: true,
     enableTracing: true,
   });
-  
+
   // Start tracing before creating the NestJS app
   await tracing.start();
-  
+
   // Setup graceful shutdown (doesn't exit process automatically)
   tracing.setupGracefulShutdown();
-  
+
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
 }
@@ -143,10 +143,7 @@ const developmentTracing = new TracingSDK({
 });
 
 // Start both instances
-await Promise.all([
-  productionTracing.start(),
-  developmentTracing.start(),
-]);
+await Promise.all([productionTracing.start(), developmentTracing.start()]);
 ```
 
 ## Supported Instrumentations
@@ -166,6 +163,7 @@ The SDK automatically includes the following instrumentations:
 ### TracingSDK Class
 
 #### Constructor
+
 ```typescript
 new TracingSDK(options?: TracingSDKOptions)
 ```
@@ -238,7 +236,8 @@ process.on('SIGTERM', async () => {
 });
 ```
 
-**Important**: 
+**Important**:
+
 - `setupGracefulShutdown()` - Only shuts down the tracing SDK but doesn't exit the process. This allows you to handle other cleanup logic before exiting.
 - `setupGracefulShutdownWithExit()` - Shuts down the tracing SDK and then exits the process automatically. Use this for standalone applications.
 
@@ -258,9 +257,9 @@ Health check endpoints are automatically excluded from tracing to reduce noise:
 
 ```typescript
 // The SDK automatically ignores /health endpoints
-'@opentelemetry/instrumentation-express': { 
-  enabled: true, 
-  ignoreLayers: ['/health'] 
+'@opentelemetry/instrumentation-express': {
+  enabled: true,
+  ignoreLayers: ['/health']
 }
 ```
 

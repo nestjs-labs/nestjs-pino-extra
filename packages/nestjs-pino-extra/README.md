@@ -40,8 +40,9 @@ import { LoggerModule } from '@nestjs-labs/nestjs-pino-extra';
     ConfigModule.forRoot(),
     LoggerModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) =>
-        getNestjsPinoModuleOptions(configService),
+      useFactory: (configService: ConfigService) => {
+        return getNestjsPinoModuleOptions(configService);
+      }
       inject: [ConfigService],
     }),
   ],

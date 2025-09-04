@@ -12,11 +12,7 @@ import { getSerializers } from './serializers.js';
 /**
  * get pino http option
  */
-export function getPinoHttpOption(
-  level = 'info',
-  spanIdKey = 'spanId',
-  traceIdKey = 'traceId',
-): Options {
+export function getPinoHttpOption(level = 'info', spanIdKey = 'spanId', traceIdKey = 'traceId'): Options {
   return {
     // https://getpino.io/#/docs/api?id=timestamp-boolean-function
     // Change time value in production log.
@@ -33,12 +29,7 @@ export function getPinoHttpOption(
     formatters: getOtelFormatters(spanIdKey, traceIdKey),
     serializers: getSerializers(),
     redact: {
-      paths: [
-        'password',
-        'reqBody.password',
-        'user.password',
-        'reqBody.user.password',
-      ],
+      paths: ['password', 'reqBody.password', 'user.password', 'reqBody.user.password'],
     },
     genReqId: function (req, res) {
       const reqId = req.id ?? req.headers['x-request-id'];
@@ -51,11 +42,7 @@ export function getPinoHttpOption(
       return id;
     },
     // Define a custom logger level
-    customLogLevel(
-      _: IncomingMessage,
-      res: ServerResponse<IncomingMessage>,
-      err?: Error,
-    ) {
+    customLogLevel(_: IncomingMessage, res: ServerResponse<IncomingMessage>, err?: Error) {
       if (res.statusCode >= 400 && res.statusCode < 500) {
         return 'warn';
       } else if (res.statusCode >= 500 || err) {

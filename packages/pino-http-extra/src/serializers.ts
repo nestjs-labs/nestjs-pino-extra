@@ -1,10 +1,6 @@
 /* eslint-disable sort-keys */
 import type { SerializerFn } from 'pino';
-import type {
-  SerializedError,
-  SerializedRequest,
-  SerializedResponse,
-} from 'pino-std-serializers';
+import type { SerializedError, SerializedRequest, SerializedResponse } from 'pino-std-serializers';
 
 /**
  * get serializers

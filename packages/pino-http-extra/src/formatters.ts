@@ -4,10 +4,7 @@ import { context, trace } from '@opentelemetry/api';
  * add custom formatters
  * https://github.com/pinojs/pino-http?tab=readme-ov-file#custom-formatters
  */
-export function getOtelFormatters(
-  spanIdKey = 'spanId',
-  traceIdKey = 'traceId',
-) {
+export function getOtelFormatters(spanIdKey = 'spanId', traceIdKey = 'traceId') {
   return {
     level: (label: string) => {
       return { level: label };
