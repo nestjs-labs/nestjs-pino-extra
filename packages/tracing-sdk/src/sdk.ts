@@ -106,7 +106,7 @@ export class TracingSDK {
         port: this.options.promPort,
       });
 
-      config.metricReader = metricReader;
+      config.metricReaders = [metricReader];
     }
 
     // Add tracing if enabled
