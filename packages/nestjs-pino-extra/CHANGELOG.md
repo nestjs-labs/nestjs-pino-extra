@@ -1,5 +1,13 @@
 # @nestjs-labs/nestjs-pino-extra
 
+## 1.5.3
+
+### Patch Changes
+
+- 78b0d76: update dependencies
+- Updated dependencies [78b0d76]
+  - @nestjs-labs/pino-http-extra@1.5.3
+
 ## 1.5.2
 
 ### Patch Changes
