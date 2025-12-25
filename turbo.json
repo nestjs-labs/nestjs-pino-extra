@@ -29,11 +29,6 @@
       "outputs": ["coverage/**"],
       "cache": true
     },
-    "semantic-release": {
-      "dependsOn": ["build", "test"],
-      "outputs": [],
-      "cache": false
-    },
     "typedoc": {
       "dependsOn": ["build"],
       "outputs": ["_docs/**", "docs/**"],

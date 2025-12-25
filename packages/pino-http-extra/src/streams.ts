@@ -27,8 +27,10 @@ export function createPrettyStreamEntry(_app: string, level: pino.Level): pino.S
  */
 export function createLokiStreamEntry(app: string, level: pino.Level, lokiOptions: LokiOptions): pino.StreamEntry {
   const stream = pinoLoki({
-    batching: true,
-    interval: 5,
+    batching: {
+      interval: Number(process.env.LOG_LOKI_INTERVAL) || 10, // Send logs every 2 seconds
+      maxBufferSize: Number(process.env.LOG_LOKI_INTERVAL) || 5000, // // Keep max 5000 logs in buffer
+    },
     labels: { app, service: app },
     replaceTimestamp: true,
     ...lokiOptions,
