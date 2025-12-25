@@ -11,9 +11,7 @@
     "test": "turbo run test",
     "typedoc": "typedoc",
     "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "changeset publish -r --access public --no-git-tag",
-    "release:dry-run": "changeset version && changeset publish --dry-run --access public"
+    "version-packages": "changeset version"
   },
   "keywords": [
     "nestjs",
