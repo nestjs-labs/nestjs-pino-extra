@@ -11,6 +11,7 @@
     "test": "turbo run test",
     "typedoc": "typedoc",
     "changeset": "changeset",
+    "release": "changeset publish",
     "version-packages": "changeset version"
   },
   "keywords": [
