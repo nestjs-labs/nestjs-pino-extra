@@ -1,5 +1,11 @@
 # @nestjs-labs/pino-http-extra
 
+## 1.5.2
+
+### Patch Changes
+
+- 763e56d: update version to 1.5.2
+
 ## 1.5.1
 
 ### Patch Changes
